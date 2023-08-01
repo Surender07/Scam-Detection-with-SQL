@@ -1,100 +1,57 @@
-# Fraud_Detection_SQL
-
-![Credit card fraudster](Images/credit_card_fraudster.jpg)
-
-*[Credit Card Fraudster by Richard Patterson](https://www.flickr.com/photos/136770128@N07/42252105582/) | [Creative Commons Licensed](https://creativecommons.org/licenses/by/2.0/)*
+# Fraud Detection SQL
 
 ## Background
 
-Fraud is everywhere these days—whether you are a small taco shop or a large international business. While there are emerging technologies that employ machine learning and artificial intelligence to detect fraud, many instances of fraud detection still require strong data analytics to find abnormal charges.
+Fraud is a prevalent issue in various businesses, and detecting fraudulent transactions is crucial to minimize financial losses. In this project, we will apply SQL skills to analyze historical credit card transactions and consumption patterns to identify possible fraudulent activities.
 
-Application of new SQL skills to analyze historical credit card transactions and consumption patterns in order to identify possible fraudulent transactions.
+The tasks to be accomplished are as follows:
 
-Accomplish three main tasks:
+1. **Data Modeling:** Define a database model to store credit card transaction data and create a new PostgreSQL database using the model.
 
-1. [Data Modeling](#Data-Modeling):
-Define a database model to store the credit card transactions data and create a new PostgreSQL database using your model.
+2. **Data Engineering:** Create a database schema in PostgreSQL and populate the database with data from CSV files.
 
-2. [Data Engineering](#Data-Engineering): Create a database schema on PostgreSQL and populate your database from the CSV files provided.
-
-3. [Data Analysis](#Data-Analysis): Analyze the data to identify possible fraudulent transactions.
-
----
+3. **Data Analysis:** Analyze the data to identify possible fraudulent transactions.
 
 ## Files
 
 ### Query Files
 
-* [schema.sql](SQL/schema.sql)
-* [seed.sql](SQL/seed.sql)
+- **schema.sql:** Contains SQL queries to create the database schema with tables and relationships.
+- **seed.sql:** Contains SQL queries to populate the database with data from CSV files.
 
 ### CSV Files
 
-* [card_holder.csv](Data/card_holder.csv)
-* [credit_card.csv](Data/credit_card.csv)
-* [merchant_category.csv](Data/merchant_category.csv)
-* [merchant.csv](Data/merchant.csv)
-* [transaction.csv](Data/transaction.csv)
+- **card_holder.csv:** Contains data about credit card holders.
+- **credit_card.csv:** Contains data about credit cards.
+- **merchant_category.csv:** Contains data about merchant categories.
+- **merchant.csv:** Contains data about merchants.
+- **transaction.csv:** Contains data about credit card transactions.
 
+## Data Modeling
 
-### Data Modeling
-
-Create an entity relationship diagram (ERD) by inspecting the provided CSV files.
-
-**Note:** For the `credit_card` table, the `card` column should be a VARCHAR(20) datatype rather than an INT.
-
-Tool used to develop ERD [Quick Database Diagrams](https://app.quickdatabasediagrams.com/#/) to create your model.
+We will create an entity relationship diagram (ERD) by inspecting the provided CSV files. The ERD will serve as a blueprint for our database model. We will use the tool "Quick Database Diagrams" to develop the ERD.
 
 ![QuickDBD-export](Images/QuickDBD-export.png)
 
-### Data Engineering
+## Data Engineering
 
-Using your database model as a blueprint, create a database schema for each of your tables and relationships. Specify data types, primary keys, foreign keys, and any other constraints you defined.
+Using the ERD as a guide, we will create a database schema with tables, specifying data types, primary keys, foreign keys, and other constraints as defined in the ERD. After creating the schema, we will import data from the corresponding CSV files into the database.
 
-After creating the database schema, import the data from the corresponding CSV files.
+## Data Analysis
 
+With the data prepared in the database, we will proceed to identify fraudulent transactions using SQL and Pandas DataFrames. We will perform the following analyses:
 
-### Data Analysis
+1. Identify the top 100 highest transactions during early hours (7:00 to 9:00 AM).
+2. Count the transactions that are less than $2.00 per cardholder to identify potential hacking.
+3. Determine the top five merchants prone to being hacked using small transactions.
+4. Create views for the reusable queries.
 
-Now that your data is prepared within the database, it's finally time to identify fraudulent transactions using SQL and Pandas DataFrames.
+Next, we will create a report for fraudulent transactions of some top customers using Pandas, Plotly Express, hvPlot, and SQLAlchemy to visualize the data.
 
-Top 100 highest transactions during early hours i.e. 7:00 to 9:00 AM
+- Fraudulent transactions for two important customers (ID 18 and ID 2) will be analyzed in detail to understand their consumption patterns and susceptibility to fraud.
 
-![Early_hour](Images/Early_hour.PNG)
-
-* Some fraudsters hack a credit card by making several small payments (generally less than $2.00), which are typically ignored by cardholders. Count the transactions that are less than $2.00 per cardholder. Is there any evidence to suggest that a credit card has been hacked? Explain your rationale.
-
-* What are the top five merchants prone to being hacked using small transactions?
-
-* Once you have a query that can be reused, create a view for each of the previous queries.
-
-Created a report for fraudulent transactions of some top customers of the firm using Pandas, Plotly Express, hvPlot, and SQLAlchemy to create the visualizations.
-
-* Fraudulent transactions in the history of two of the most important customers of the firm on the basis of their cardholders' IDs are 18 and 2.
-
- ![id_holder_2](Images/id_holder_2.PNG)
- ![id_holder_18](Images/id_holder_18.PNG)
-  
-  * Observation : `The consumption pattern for both the id holder is very different. Id Holder 2 makes too many small transactions. Id Holder 18 has transactions ranging till $1839. Id Holder 2 is more suspectable to fraudulent transactions`
-
-* The CEO of the firm's biggest customer suspects that someone has used her corporate credit card without authorization in the first quarter of 2018 to pay for several expensive restaurant bills. You are asked to find any anomalous transactions during that period.
-
-  * Using Plotly Express, created a series of six box plots, one for each month, in order to identify how many outliers there are per month for cardholder ID 25.
-  
-  ![id_holder_25](Images/id_holder_25.PNG)
-
-  * Observations : `There seems to be fraudulent transactions pertaining to Restaurant & Food Truck category where Food Truck is ranging from $1.46 to $1046`
-
+Finally, we will investigate anomalous transactions during the first quarter of 2018 for a specific cardholder (ID 25) using Plotly Express to create box plots for each month.
 
 ## Challenge
 
-Another approach to identify fraudulent transactions is to look for outliers in the data. Standard deviation or quartiles are often used to detect outliers.
-
-#### Identifying Outliers based on Standard Deviation
-
-![anomalous_transaction](Images/anomalous_transaction.PNG)
-
-#### Identifying Outliers based on Interquartile Range
-
-![anomalous_transaction](Images/anomalous_transaction.PNG)
-
+As an additional approach to identifying fraudulent transactions, we will explore outlier detection using standard deviation and interquartile range (IQR). These methods are commonly used to detect outliers in data.
